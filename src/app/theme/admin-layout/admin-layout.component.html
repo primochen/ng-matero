@@ -45,6 +45,31 @@
 
       <app-topmenu *ngIf="options.navPos === 'top'"></app-topmenu>
 
+      <!--https://coderanch.com/t/675878/angular-typescript-spa-javascript/languages/Angular-Development-TypeScript-dynamically-content-->
+      <!--https://stackoverflow.com/questions/71609227/angular-set-a-mat-tab-link-active-after-a-tab-is-closed/71626936-->
+      <!-- <div *ngIf="currentTab"> -->
+        <nav mat-tab-nav-bar>
+          <a
+            mat-tab-link
+            *ngFor="let tab of tabs; let index = index"
+            [routerLink]="tab.link"
+            routerLinkActive="false"
+            #rla="routerLinkActive"
+            [active]="rla.isActive"
+            (click)="onSelect(tab, index)"
+            disableRipple
+          >
+            {{tab.name | translate}}
+            <button 
+              mat-icon-button 
+              (click)="onRemoveTab(tab.name, index)" 
+              [disabled]="tabs.length === 1"
+            >
+              <mat-icon style="transform: scale(0.8);" *ngIf="tab.name !=='menu.dashboard'">close</mat-icon>
+            </button>
+          </a>
+        </nav>
+      <!-- </div> -->
       <div class="matero-content">
         <router-outlet></router-outlet>
       </div>

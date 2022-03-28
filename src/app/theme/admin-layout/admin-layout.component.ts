@@ -19,6 +19,9 @@ import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 
 import { SettingsService, AppSettings } from '@core';
 import { AppDirectionality } from '@shared';
+import { FormControl } from '@angular/forms';
+import { SidenavRouteInterface, TabService } from '@shared/services/tab.service';
+import { TranslateService } from '@ngx-translate/core';
 
 const MOBILE_MEDIAQUERY = 'screen and (max-width: 599px)';
 const TABLET_MEDIAQUERY = 'screen and (min-width: 600px) and (max-width: 959px)';
@@ -64,18 +67,53 @@ export class AdminLayoutComponent implements OnDestroy {
 
   private isCollapsedWidthFixed = false;
 
+  // -------------------
+  // https://stackoverflow.com/questions/71609227/angular-set-a-mat-tab-link-active-after-a-tab-is-closed/71626936
+  selected = new FormControl(0);
+  public tabs: SidenavRouteInterface[] = [];
+  sessionKey = 'currentTab';
+  previousTab: SidenavRouteInterface | undefined;
+
+  onSelect(router: SidenavRouteInterface, index: number) {
+    // sessionStorage.setItem(this.sessionKey, JSON.stringify(router));
+    this.selected.setValue(router.link);
+    // console.log(router.link);
+    this.router.navigate([router.link]);
+  }
+
+  onRemoveTab(tabId: string, index: number) {
+    this.tabs.forEach(tab => {
+      if (tab.name === tabId) {
+        this.tabs.splice(index, 1);
+        this.selected.setValue(this.previousTab?.link);
+        this.router.navigate([this.previousTab?.link]);
+
+        // sessionStorage.setItem(this.sessionKey, JSON.stringify(this.previousTab));
+      } else {
+        this.previousTab = tab;
+      }
+    });
+
+    return false;
+  }
+
+  // -------------------
   constructor(
     private router: Router,
     private mediaMatcher: MediaMatcher,
     private breakpointObserver: BreakpointObserver,
     private overlay: OverlayContainer,
     private element: ElementRef,
+    private tabService: TabService,
     private settings: SettingsService,
+    private translateService: TranslateService,
     @Optional() @Inject(DOCUMENT) private document: Document,
     @Inject(Directionality) public dir: AppDirectionality
   ) {
     this.dir.value = this.options.dir!;
     this.document.body.dir = this.dir.value;
+
+    this.tabs = tabService.tabs;
 
     this.layoutChangesSubscription = this.breakpointObserver
       .observe([MOBILE_MEDIAQUERY, TABLET_MEDIAQUERY, MONITOR_MEDIAQUERY])

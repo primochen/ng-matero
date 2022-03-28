@@ -12,6 +12,7 @@
             [group]="menuItem.route" [type]="menuItem.type">
 
           <a class="matero-sidemenu-link"
+             (click)="onAddTab(menuItem.name,parentRoute.concat([menuItem.route]).join('/'))"
              [routerLink]="buildRoute(parentRoute.concat([menuItem.route]))"
              *ngIf="menuItem.type==='link'" matRipple [matRippleDisabled]="!ripple">
             <ng-container [ngTemplateOutlet]="linkTypeTpl"
