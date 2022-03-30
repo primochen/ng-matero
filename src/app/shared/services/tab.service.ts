@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class TabService {
   // messages: string[] = [];
-  public tabs: SidenavRouteInterface[] = [{ name: 'menu.dashboard', link: 'dashboard' }];
+  public tabs: SidenavRouteInterface[] = [{ name: 'menu.dashboard', link: '/dashboard' }];
   // [
   //   { id: 6, name: '儀錶板', link: 'dashboard' },
   //   { id: 7, name: '表單元素', link: 'forms/elements' },

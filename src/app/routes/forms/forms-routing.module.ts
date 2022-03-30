@@ -7,10 +7,10 @@ import { FormsDynamicComponent } from './dynamic/dynamic.component';
 import { FormsDatetimeComponent } from './datetime/datetime.component';
 
 const routes: Routes = [
-  { path: 'elements', component: FormsElementsComponent },
-  { path: 'dynamic', component: FormsDynamicComponent },
-  { path: 'select', component: FormsSelectComponent },
-  { path: 'datetime', component: FormsDatetimeComponent },
+  { path: 'elements', component: FormsElementsComponent, data: { key: 'elements' } },
+  { path: 'dynamic', component: FormsDynamicComponent, data: { key: 'dynamic' } },
+  { path: 'select', component: FormsSelectComponent, data: { key: 'select' } },
+  { path: 'datetime', component: FormsDatetimeComponent, data: { key: 'datetime' } },
 ];
 
 @NgModule({

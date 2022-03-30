@@ -20,6 +20,8 @@ import { BASE_URL, httpInterceptorProviders, appInitializerProviders } from '@co
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemDataService } from '@shared/in-mem/in-mem-data.service';
+import { RouteReuseStrategy } from '@angular/router';
+import { SimpleReuseStrategy } from '@shared/services/reuse-strategy';
 
 // Required for AOT compilation
 export function TranslateHttpLoaderFactory(http: HttpClient) {
@@ -53,6 +55,7 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
     }),
   ],
   providers: [
+    { provide: RouteReuseStrategy, useClass: SimpleReuseStrategy },
     { provide: BASE_URL, useValue: environment.baseUrl },
     httpInterceptorProviders,
     appInitializerProviders,

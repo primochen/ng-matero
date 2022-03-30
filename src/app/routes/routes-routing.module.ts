@@ -20,10 +20,10 @@ const routes: Routes = [
     canActivateChild: [AuthGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: '403', component: Error403Component },
-      { path: '404', component: Error404Component },
-      { path: '500', component: Error500Component },
+      { path: 'dashboard', component: DashboardComponent, data: { key: 'dashboard' } },
+      { path: '403', component: Error403Component, data: { key: '403' } },
+      { path: '404', component: Error404Component, data: { key: '404' } },
+      { path: '500', component: Error500Component, data: { key: '500' } },
       {
         path: 'design',
         loadChildren: () => import('./design/design.module').then(m => m.DesignModule),
@@ -62,9 +62,10 @@ const routes: Routes = [
   {
     path: 'auth',
     component: AuthLayoutComponent,
+    data: { key: 'auth' },
     children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
+      { path: 'login', component: LoginComponent, data: { key: 'login' } },
+      { path: 'register', component: RegisterComponent, data: { key: 'register' } },
     ],
   },
   { path: '**', redirectTo: 'dashboard' },

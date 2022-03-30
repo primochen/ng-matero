@@ -37,11 +37,13 @@ export class SidemenuComponent {
 
     //*****************
     let isNotContain = true;
+    // console.log(this.tabService.tabs);
     this.tabService.tabs.forEach(tab => {
       if (tab.link === this.router.url) {
         isNotContain = false;
       }
     });
+    // console.log(isNotContain);
     // console.log(isNotContain)
     // console.log(this.router.url)
     // console.log(this.tabService.tabs)
